@@ -48,6 +48,6 @@ make
 ./phpbot ../tests/test.php -h
 ```
 
-4. Others
+## Others
 
 - Tested to pass on WSL and MacOS
