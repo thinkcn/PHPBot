@@ -47,3 +47,7 @@ make
 # Help
 ./phpbot ../tests/test.php -h
 ```
+
+4. Others
+
+- Tested to pass on WSL and MacOS
