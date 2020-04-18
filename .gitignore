@@ -33,3 +33,5 @@
 *.g4
 *.interp
 *.tokens
+*.svn
+*.svn/*
