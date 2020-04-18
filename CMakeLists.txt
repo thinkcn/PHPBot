@@ -13,8 +13,7 @@ find_package(PkgConfig)
 
 # ### Search Additional Libraries ##########
   
-
- 
+SET(CMAKE_CXX_FLAGS "-std=c++11 -O3")
 
 # #### End of additional libraries search ##########
 
@@ -67,11 +66,11 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CIMG_CFLAGS}")
 
 # to disable some warnings for CImg
 if (NOT WIN32)
-  set(CMAKE_CXX_FLAGS "-Wdeprecated -Wno-attributes" )
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdeprecated -Wno-attributes" )
 endif()
 
 if (APPLE)
-  set(CMAKE_CXX_FLAGS "-Wdeprecated -Wwritable-strings -std=c++11" )
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdeprecated -Wwritable-strings -std=c++11" )
 endif()
 
 if (MSVC)
