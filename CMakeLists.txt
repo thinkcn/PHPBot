@@ -183,7 +183,7 @@ endif()
 # copy the input file next to the generated executable
 add_custom_command(TARGET phpbot POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_if_different
-  "${PROJECT_SOURCE_DIR}/test.php"
+  "${PROJECT_SOURCE_DIR}/tests/test.php"
   $<TARGET_FILE_DIR:phpbot>)
 
 # necessary because the default working directory of Visual Studio
@@ -194,6 +194,6 @@ add_custom_command(TARGET phpbot POST_BUILD
 if (WIN32)
 add_custom_command(TARGET phpbot POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_if_different
-  "${PROJECT_SOURCE_DIR}/test.php"
+  "${PROJECT_SOURCE_DIR}/tests/test.php"
   $<TARGET_FILE_DIR:phpbot>/../)
 endif()
