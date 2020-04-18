@@ -1,4 +1,7 @@
-
+/**
+ * Copyright (c) 2020, mll <coleflowersma at gmail dot com>
+ * All rights reserved.
+ */
 #include "PHPParserVisitor.h"
 #include "PHPParserBaseVisitor.h"
 

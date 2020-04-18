@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020, mll <coleflowersma at gmail dot com>
+ * All rights reserved.
+ */
 #include <algorithm>
 #include "antlr4-runtime/antlr4-runtime.h"
 #include "PHPVisitor.h"

@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020, mll <coleflowersma at gmail dot com>
+ * All rights reserved.
+ */
 #include <iostream>
 #include <string.h>
 #include <stdio.h> 
