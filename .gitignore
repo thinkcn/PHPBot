@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+*.g4
+*.interp
+*.tokens
