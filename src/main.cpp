@@ -10,6 +10,7 @@
 #include "PHPParser.h"
 #include "PHPParserVisitor.h"
 #include "PHPVisitor.h"
+#include "TitaniumAntlrErrorListener.h"
 
 #define PHPBOT_VERSION "Beta1.0.0"
 
@@ -83,6 +84,12 @@ int main(int argc, const char* argv[]) {
     PHPLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
     PHPParser parser(&tokens);
+
+    if (!isDebug) { 
+        parser.removeErrorListeners();
+        lexer.removeErrorListeners(); 
+    }
+   
     PHPParser::ProgContext* tree = parser.prog();
     
     PHPVisitor visitor;
