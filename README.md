@@ -26,7 +26,7 @@ DESTDIR=/antlrcpp/runtime/path/inatall/path/ make install
 3. Build
 
 ```bash
-git pull https://github.com/thinkcn/PHPBot.git
+git clone https://github.com/thinkcn/PHPBot.git
 cd PHPBot
 # modify 'ANTLR_CPP_RUNTIME_DST' of CMakeLists.txt 
 mkdir build
