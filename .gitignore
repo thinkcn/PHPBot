@@ -36,3 +36,5 @@
 *.svn
 *.svn/*
 build/*
+*/*.h.bk
+*/*.cpp.bk
