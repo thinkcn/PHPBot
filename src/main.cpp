@@ -9,8 +9,7 @@
 #include "PHPLexer.h"
 #include "PHPParser.h"
 #include "PHPParserVisitor.h"
-#include "PHPVisitor.h"
-#include "TitaniumAntlrErrorListener.h"
+#include "PHPVisitor.h" 
 
 #define PHPBOT_VERSION "Beta1.0.0"
 
