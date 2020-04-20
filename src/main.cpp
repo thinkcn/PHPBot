@@ -11,7 +11,7 @@
 #include "PHPParserVisitor.h"
 #include "PHPVisitor.h" 
 
-#define PHPBOT_VERSION "Beta1.0.0"
+#define PHPBOT_VERSION "Beta1.0.2"
 
 using namespace std;
 using namespace antlr4;

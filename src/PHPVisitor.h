@@ -9,6 +9,7 @@ class  PHPVisitor : public PHPParserBaseVisitor {
 public:
 
   std::vector<std::string> classFields;
+  std::vector<std::string> types;
   std::vector<std::string> methods;
   std::string gerSetter();
   std::string gerGetter();
@@ -25,8 +26,8 @@ public:
 
 private:
     bool isDebug = false;
-    std::string gerFieldSetter(std::string field);
-    std::string gerFieldGetter(std::string field);
+    std::string gerFieldSetter(std::string field, std::string type = "");
+    std::string gerFieldGetter(std::string field, std::string type = "");
     char* toUpper(std::string str);
     bool debug();
 };

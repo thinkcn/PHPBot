@@ -75,15 +75,34 @@ antlrcpp::Any PHPVisitor::visitClassMember(PHPParser::ClassMemberContext *contex
     std::string word = token->getText(); 
 
     debug() && printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
- 
+   
     PHPParser::FieldDefinitionContext *field = context->fieldDefinition();
     if (field) {
-        antlr4::Token *token9 =   field->fieldName()->variablename()->getStart(); 
+        antlr4::Token *token9 = field->fieldName()->variablename()->getStart(); 
      
         std::string word9 = token9->getText(); 
         debug() &&  printf("\tfield:%s line:%zu %s\n", __FUNCTION__, token9->getLine(), word9.data());
 
         classFields.push_back(word9);
+
+        std::string type = "unknow";
+        if (field->Equals()) {
+            if (field->atom()) {
+                PHPParser::AtomContext *atom = field->atom();
+                if (atom->number()) {
+                    type = "int";
+                } else if (atom->string()) {
+                    type = "string";
+                } else if (atom->Boolean()) {
+                    type = "bool";
+                } else if (atom->arrayDeclaration()) {
+                    type = "array";
+                } else if (atom->functionInvocation()) {
+                    type = "function";
+                }
+            } 
+        }
+        types.push_back(type); 
     }
  
     // 修饰
@@ -162,9 +181,14 @@ std::string PHPVisitor::gerSetter()
     std::stringstream str;
     for (size_t i =0; i < classFields.size(); i ++) {
         std::string field = classFields[i]; 
+        std::string type = types[i];
 
-        std::string setter = gerFieldSetter(field);
+        std::string setter = gerFieldSetter(field, type);
         //printf("%s\n", setter.data());
+
+        if (setter.empty()) {
+            continue;
+        }
 
         str << setter;
 
@@ -181,8 +205,12 @@ std::string PHPVisitor::gerGetter()
     std::stringstream str;
     for (size_t i =0; i < classFields.size(); i ++) {
         std::string field = classFields[i]; 
+        std::string type = types[i];
 
-        std::string getter = gerFieldGetter(field); 
+        std::string getter = gerFieldGetter(field, type); 
+        if (getter.empty()) {
+            continue;
+        }
 
         str << getter;
 
@@ -199,12 +227,25 @@ std::string PHPVisitor::gerGetterSetter()
     std::stringstream str;
     for (size_t i =0; i < classFields.size(); i ++) {
         std::string field = classFields[i]; 
+        std::string type = types[i];
 
-        std::string getter = gerFieldGetter(field); 
-        std::string setter = gerFieldSetter(field); 
+        std::string getter = gerFieldGetter(field, type); 
+        std::string setter = gerFieldSetter(field, type); 
 
-        str << setter << "\n" << getter;
+        debug() && printf("type : %s\n", type.data());
 
+        if (setter.empty() && getter.empty()) {
+            continue;
+        }
+        if (!setter.empty()) {
+            str << setter;
+        }
+        if (!setter.empty() && !getter.empty()) {
+            str << "\n";
+        }
+        if (!getter.empty()) {
+            str << getter;
+        }
         if (i < classFields.size() - 1) {
             str << "\n";
         }
@@ -213,16 +254,20 @@ std::string PHPVisitor::gerGetterSetter()
     return str.str(); 
 }
 
-std::string PHPVisitor::gerFieldGetter(std::string field)
+std::string PHPVisitor::gerFieldGetter(std::string field, std::string type)
 {
     std::string name = "get" + std::string(toUpper(field));
     if (std::find(methods.begin(), methods.end(), name) != methods.end()) {
         return "";
     }
+    std::string fieldType = "mixed";
+    if (!type.empty() && type != "function" && type != "unknow") {
+        fieldType = type;
+    }
     std::string tab = "    ";// "\t";
-    std::stringstream res;   
+    std::stringstream res; 
     res << tab << "/**\n"
-    << tab << " * @return mixed\n" //TODO: 类型推导
+    << tab << " * @return " << fieldType << "\n" //TODO: 类型推导
     << tab << " */\n"
     << tab << "public function " << name <<"()\n"
     << tab << "{\n"
@@ -231,20 +276,28 @@ std::string PHPVisitor::gerFieldGetter(std::string field)
     return res.str();
 }
 
-std::string PHPVisitor::gerFieldSetter(std::string field) 
+std::string PHPVisitor::gerFieldSetter(std::string field, std::string type) 
 {
     std::string name = "set" + std::string(toUpper(field));
     if (std::find(methods.begin(), methods.end(), name) != methods.end()) {
         return "";
     }
+    std::string fieldType = "mixed";
+    if (!type.empty() && type != "function" && type != "unknow") {
+        fieldType = type;
+    }
+    std::string paramType = "";
+    if (fieldType != "mixed") {
+        paramType = fieldType + " ";
+    }
     std::string tab = "    ";// "\t";
     std::stringstream res;   
     res << tab << "/**\n"
-    << tab << " * @param mixed $" << field << "\n" //TODO:: 类型推导
+    << tab << " * @param " << fieldType << " $" << field << "\n" //TODO:: 类型推导
     << tab << " *\n"
     << tab << " * @return self\n"
     << tab << " */\n"
-    << tab << "public function " << name <<"($" << field <<")\n"
+    << tab << "public function " << name <<"(" << paramType << "$" << field <<")\n"
     << tab << "{\n"
     << tab << "\t$this->" << field <<" = $" << field << ";\n"
     "\n" // 空行
