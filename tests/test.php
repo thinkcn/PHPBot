@@ -16,7 +16,11 @@ class TestPrice
     {
     }
 
-    public function printTxt($txt = '')
+    static public function printTxt($txt = '')
     {
     }
 }
+
+
+    $a = new TestPrice();
+    echo "a".PHP_EOL;
