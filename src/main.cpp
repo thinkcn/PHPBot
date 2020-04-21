@@ -36,7 +36,7 @@ void usage(void) {
 
 void version(void)
 {
-    fprintf(stderr, "phobot %s\n", PHPBOT_VERSION);
+    fprintf(stderr, "phpbot %s\n", PHPBOT_VERSION);
     exit(1);
 }
 
