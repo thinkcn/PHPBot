@@ -11,10 +11,10 @@ antlrcpp::Any PHPVisitor::visitProg(PHPParser::ProgContext *ctx)
 {
     antlr4::Token *token =   ctx->getStart(); 
 
-    int line    = token->getLine(); 
+    size_t line    = token->getLine(); 
     std::string word = token->getText(); 
 
-    debug() &&  printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+    debug() &&  printf("func:%s line:%zu %s\n", __FUNCTION__, line, word.data());
 
     return visitChildren(ctx);
 }
@@ -23,10 +23,10 @@ antlrcpp::Any PHPVisitor::visitPhpBlock(PHPParser::PhpBlockContext *context)
 {
     antlr4::Token *token =   context->getStart(); 
 
-    int line    = token->getLine(); 
+    size_t line    = token->getLine(); 
     std::string word = token->getText(); 
 
-    //printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+    //printf("func:%s line:%zu %s\n", __FUNCTION__, line, word.data());
     return visitChildren(context);
 }
 
@@ -35,10 +35,10 @@ antlrcpp::Any PHPVisitor::visitClassName(PHPParser::ClassNameContext *context)
     if (context->Identifier()) { 
         antlr4::Token *token =   context->Identifier()->getSymbol(); 
 
-        int line    = token->getLine();// - 1;
+        size_t line    = token->getLine();// - 1;
         std::string word = token->getText();
 
-        debug() &&  printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+        debug() &&  printf("func:%s line:%zu %s\n", __FUNCTION__, line, word.data());
     }
     return visitChildren(context);
 }
@@ -47,11 +47,11 @@ antlrcpp::Any PHPVisitor::visitClassDefinition(PHPParser::ClassDefinitionContext
 {
     antlr4::Token *token = context->getStart(); 
 
-    int line    = token->getLine();
+    size_t line    = token->getLine();
     std::string word = token->getText(); 
 
 
-    debug() &&  printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+    debug() &&  printf("func:%s line:%zu %s\n", __FUNCTION__, line, word.data());
     return visitChildren(context);
 }
 
@@ -59,10 +59,10 @@ antlrcpp::Any PHPVisitor::visitClassImplements(PHPParser::ClassImplementsContext
 {
     antlr4::Token *token =   context->getStart(); 
 
-    int line    = token->getLine(); 
+    size_t line    = token->getLine(); 
     std::string word = token->getText(); 
 
-    debug() && printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+    debug() && printf("func:%s line:%zu %s\n", __FUNCTION__, line, word.data());
     return visitChildren(context);
 }
 
@@ -73,10 +73,10 @@ antlrcpp::Any PHPVisitor::visitClassMember(PHPParser::ClassMemberContext *contex
     debug() && printf("\n");
     antlr4::Token *token = context->getStart(); 
 
-    int line    = token->getLine(); 
+    size_t line    = token->getLine(); 
     std::string word = token->getText(); 
 
-    debug() && printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+    debug() && printf("func:%s line:%zu %s\n", __FUNCTION__, line, word.data());
    
     PHPParser::FieldDefinitionContext *field = context->fieldDefinition();
     if (field) {
@@ -115,28 +115,28 @@ antlrcpp::Any PHPVisitor::visitClassMember(PHPParser::ClassMemberContext *contex
 
             antlr4::Token *token5 =   context->fieldModifier(i)->getStart(); 
 
-            int line5    = token5->getLine(); 
+            size_t line5    = token5->getLine(); 
             std::string word5 = token5->getText(); 
-            //printf("\tfunc-par:%s line:%d %s\n", __FUNCTION__, line5, word5.data());
+            //printf("\tfunc-par:%s line:%zu %s\n", __FUNCTION__, line5, word5.data());
         }
     }
 
     if (context->Function()) { 
         antlr4::Token *token2 =   context->Function()->getSymbol(); 
 
-        int line2    = token2->getLine();
+        size_t line2    = token2->getLine();
         std::string word2 = token2->getText(); 
-        //printf("functionA---:%s line:%d %s\n", __FUNCTION__, line2, word2.data());
+        //printf("functionA---:%s line:%zu %s\n", __FUNCTION__, line2, word2.data());
 
         if (context->functionName()) {
             antlr4::Token *token3 =   context->functionName()->getStart(); 
 
-            int line3    = token3->getLine(); 
+            size_t line3    = token3->getLine(); 
             std::string word3 = token3->getText(); 
 
             methods.push_back(word3);
 
-            debug() && printf("function name---:%s line:%d %s\n", __FUNCTION__, line3, word3.data());
+            debug() && printf("function name---:%s line:%zu %s\n", __FUNCTION__, line3, word3.data());
         }
 
         PHPParser::ParametersDefinitionContext *param = context->parametersDefinition();
@@ -158,10 +158,10 @@ antlrcpp::Any PHPVisitor::visitClassMember(PHPParser::ClassMemberContext *contex
     if (context->Var()) {
         antlr4::Token *token8 =   context->Var()->getSymbol(); 
 
-        int line8    = token8->getLine(); 
+        size_t line8    = token8->getLine(); 
         std::string word8 = token8->getText(); 
 
-        debug() && printf("\tvar---:%s line:%d %s\n", __FUNCTION__, line8, word8.data());
+        debug() && printf("\tvar---:%s line:%zu %s\n", __FUNCTION__, line8, word8.data());
     }
     return visitChildren(context);
 }
@@ -170,10 +170,10 @@ antlrcpp::Any PHPVisitor::visitClassMember(PHPParser::ClassMemberContext *contex
 antlrcpp::Any PHPVisitor::visitClassModifier(PHPParser::ClassModifierContext *context)
 {
     antlr4::Token *token =   context->getStart(); 
-    int line    = token->getLine();
+    size_t line    = token->getLine();
     std::string word = token->getText(); 
 
-    debug() && printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+    debug() && printf("func:%s line:%zu %s\n", __FUNCTION__, line, word.data());
     return visitChildren(context);
 }
 
