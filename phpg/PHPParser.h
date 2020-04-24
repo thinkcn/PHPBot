@@ -1014,6 +1014,7 @@ public:
     ParamDefContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     ParamNameContext *paramName();
+    antlr4::tree::TerminalNode *PrimitiveType();
     antlr4::tree::TerminalNode *Equals();
     AtomContext *atom();
 
