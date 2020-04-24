@@ -32,12 +32,14 @@ antlrcpp::Any PHPVisitor::visitPhpBlock(PHPParser::PhpBlockContext *context)
 
 antlrcpp::Any PHPVisitor::visitClassName(PHPParser::ClassNameContext *context) 
 {
-    antlr4::Token *token =   context->Identifier()->getSymbol(); 
+    if (context->Identifier()) { 
+        antlr4::Token *token =   context->Identifier()->getSymbol(); 
 
-    int line    = token->getLine();// - 1;
-    std::string word = token->getText();
+        int line    = token->getLine();// - 1;
+        std::string word = token->getText();
 
-    debug() &&  printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+        debug() &&  printf("func:%s line:%d %s\n", __FUNCTION__, line, word.data());
+    }
     return visitChildren(context);
 }
 
